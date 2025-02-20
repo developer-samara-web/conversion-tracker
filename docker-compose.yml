@@ -1,0 +1,26 @@
+services:
+  expressjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: expressjs
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+    depends_on:
+      - mongodb
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+
+  mongodb:
+    image: mongo:6
+    restart: always
+    container_name: mongodb1
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
