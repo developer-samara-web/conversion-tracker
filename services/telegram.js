@@ -1,5 +1,6 @@
-const { Telegraf} = require('telegraf')
+// Импорты
+const { Telegraf } = require('telegraf');
+// Получаем объект бота
+const telegram = new Telegraf(process.env.TELEGRAM_TOKEN);
 
-const telegram = new Telegraf(process.env.TELEGRAM_TOKEN)
-
-module.exports = telegram
+module.exports = telegram;
