@@ -22,12 +22,13 @@ server.get('*', function (req, res) {
 	res.status(403).send(`Ошибка дотупа.`);
 });
 
-console.log('#ConversionTracker 1.0.0')
-console.log('Автор: @developer-samara-web\n');
+// Логи
+console.log('\x1b[34m%s\x1b[0m', '#ConversionTracker 1.0.0');
+console.log('\x1b[34m%s\x1b[0m', 'Автор: @developer-samara-web\n');
 
 // Запуск сервера
 server.listen(process.env.EXPRESS_PORT, () => {
-	console.log(`EXPRESS.JS: [ ACTIVE ]`);
+	console.log('EXPRESS.JS: \x1b[32m%s\x1b[0m', 'ACTIVE' )
 });
 
 // Инициализация стадий
@@ -50,5 +51,5 @@ telegram.start(async (ctx) => {
 
 // Запуск бота
 telegram.launch().then(
-	console.log('TELEGRAF.JS: [ ACTIVE ]')
+	console.log('TELEGRAF.JS: \x1b[32m%s\x1b[0m', 'ACTIVE' )
 );
