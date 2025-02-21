@@ -11,7 +11,12 @@
   "_moduleAliases": {
     "@routes": "routes",
     "@services": "services",
+    "@requests": "requests",
+    "@controllers": "controllers",
+    "@middlewars": "middlewars",
     "@models": "models",
+    "@config": "config",
+    "@scenes": "scenes",
     "@utils": "utils"
   },
   "dependencies": {
