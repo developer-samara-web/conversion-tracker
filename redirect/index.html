@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка...</title>
+</head>
+
+<body>
+    <script>
+        // Инициализация скрипта
+        const initButton = async () => {
+            try {
+                // Адрем сервера
+                const URL = 'https://127.0.0.1:3000'
+
+                // Обработка query
+                const getQuery = (key) => {
+                    const params = new URLSearchParams(window.location.search);
+                    return params.get(key);
+                }
+
+                // Получаем clientID
+                const clientID = getQuery(process.env.REDIRECT_CLIENT_NAME)
+
+                // Запрашиваем ссылку
+                const response = await fetch(`${URL}/api/create?clientId=${clientID}`)
+                const link = await response.json()
+
+                // Редирект
+                window.location.href = link
+            } catch (e) {
+                console.error('Ошибка инициализации скрипта.', e)
+            }
+        }
+
+        // Запуск
+        initButton()
+    </script>
+</body>
+</html>
