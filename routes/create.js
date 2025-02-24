@@ -54,7 +54,7 @@ const create = async (req, res) => {
 			}, process.env.TELEGRAM_INVITE_TIME);
 
 			// Отдаём инвайт в ответе
-			res.status(200).send(href);
+			res.status(200).json({ data: href });
 		}
 	} catch (e) {
 		res.status(400).send(`Не удалось отправить приглашение.`);
