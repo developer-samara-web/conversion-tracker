@@ -28,7 +28,7 @@ console.log('\x1b[34m%s\x1b[0m', 'Автор: @developer-samara-web\n');
 
 // Запуск сервера
 server.listen(process.env.EXPRESS_PORT, () => {
-	console.log('EXPRESS.JS: \x1b[32m%s\x1b[0m', 'ACTIVE' )
+	console.log('EXPRESS.JS: \x1b[32m%s\x1b[0m', 'ACTIVE\n' )
 });
 
 // Инициализация стадий
