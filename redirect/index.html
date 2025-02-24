@@ -12,9 +12,6 @@
         // Инициализация скрипта
         const initButton = async () => {
             try {
-                // Адрем сервера
-                const URL = 'http://46.36.216.189:3000'
-
                 // Обработка query
                 const getQuery = (key) => {
                     const params = new URLSearchParams(window.location.search);
@@ -25,7 +22,7 @@
                 const clientID = getQuery('yclid')
 
                 // Запрашиваем ссылку
-                const response = await fetch(`${URL}/api/create?clientId=${clientID}`)
+                const response = await fetch(`https://46.36.216.189:3000/api/create?clientId=${clientID}`)
                 const link = await response.json()
 
                 // Редирект
