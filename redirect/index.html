@@ -22,7 +22,7 @@
                 }
 
                 // Получаем clientID
-                const clientID = getQuery(process.env.REDIRECT_CLIENT_NAME)
+                const clientID = getQuery('yclid')
 
                 // Запрашиваем ссылку
                 const response = await fetch(`${URL}/api/create?clientId=${clientID}`)
