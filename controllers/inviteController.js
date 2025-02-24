@@ -25,7 +25,7 @@ const setInvite = async (ctx) => {
 
     try {
         // Создаём инвайт
-        const invite_link = inviteRequest(ctx);
+        const invite_link = await inviteRequest(ctx);
         // Подключаемся к базе
         await connectToDatabase();
         // Создаём новый инвайт
