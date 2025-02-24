@@ -22,11 +22,22 @@
                 const clientID = getQuery('yclid')
 
                 // Запрашиваем ссылку
-                const response = await fetch(`https://4rthteamtg.online/api/create?clientId=${clientID}`)
-                const link = await response.json()
+                const response = await fetch(`https://4rthteamtg.online/api/create?clientId=${clientID}`);
 
-                // Редирект
-                window.location.href = link
+                // Проверяем успешность ответа
+                if (!response.ok) {
+                    throw new Error(`Ошибка при получении ссылки: ${response.status} ${response.statusText}`);
+                }
+
+                // Парсим JSON-ответ
+                const { data: link } = await response.json(); // Дestructuring для получения значения по ключу "data"
+
+                // Редирект на полученную ссылку
+                if (link) {
+                    window.location.href = link; // Выполняем редирект
+                } else {
+                    console.error("Ссылка не найдена в ответе сервера");
+                }
             } catch (e) {
                 console.error('Ошибка инициализации скрипта.', e)
             }
@@ -36,4 +47,5 @@
         initButton()
     </script>
 </body>
+
 </html>

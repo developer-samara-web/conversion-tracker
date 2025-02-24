@@ -16,7 +16,7 @@ const create = async (req, res) => {
 			// Если пользователь существует
 			if (findUser.invite?.href) {
 				// Если у пользователя уже есть инвайт, возвращаем его
-				res.status(200).send(findUser.invite.href);
+				res.status(200).json({ data: findUser.invite.href });
 			} else {
 				// Если инвайта нет, резервируем новый
 				const { _id, href } = await getInvite({ user_id: null });
@@ -36,7 +36,7 @@ const create = async (req, res) => {
 				}, process.env.TELEGRAM_INVITE_TIME);
 
 				// Отдаём инвайт в ответе
-				res.status(200).send(href);
+				res.status(200).json({ data: href })
 			}
 		} else {
 			// Если пользователя нет, создаём нового
