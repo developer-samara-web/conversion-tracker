@@ -13,7 +13,7 @@ const conversionRequest = async (clientId) => {
 
         // Формирование CSV
         const csvData = [
-            ['Yclid', 'Target', 'DateTime'],
+            ['yclid', 'Target', 'DateTime'],
             [clientId, process.env.METRIKA_GOAL_ID, Math.floor(Date.now() / 1000)],
         ].map(row => row.join(',')).join('\n');
 

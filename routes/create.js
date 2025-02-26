@@ -30,6 +30,8 @@ const create = async (req, res) => {
 				// Отменяем бронь через 2 минуты
 				setTimeout(async () => {
 					const user = await getUser(clientId);
+					if(user.status === 'completed') return;
+					// Очищаем инвайт
 					await updateInvite(_id, null);
 					await updateUser(user._id, { invite: null, status: 'expired' });
 					logs(`🟨 <b>INFO:</b> ${user._id} не подписался вовремя.`);
@@ -39,7 +41,7 @@ const create = async (req, res) => {
 				res.status(200).json({ data: href })
 			}
 		} else {
-			// Если пользователя нет, создаём нового
+			// Если пользователя нет, запрашиваем инвайт
 			const { _id, href } = await getInvite({ user_id: null });
 			// Создаём нового пользователя
 			const user = await setUser(clientId, _id);
@@ -48,6 +50,8 @@ const create = async (req, res) => {
 			// Отменяем бронь через 2 минуты
 			setTimeout(async () => {
 				const user = await getUser(clientId);
+				if(user.status === 'completed') return;
+				// Очищаем инвайт
 				await updateInvite(_id, null);
 				await updateUser(user._id, { invite: null, status: 'expired' });
 				logs(`🟨 <b>INFO:</b> ${user._id} не подписался вовремя.`);

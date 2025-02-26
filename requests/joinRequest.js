@@ -21,6 +21,9 @@ const joinRequest = async (ctx) => {
 			const metrikaLead = await conversionRequest(user.client_id);
 			// Отправляем лог
 			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'} ${ctx.from.first_name} (${user._id})</b> отправил заявку`);
+		} else {
+			// Отправляем лог
+			logs(`<b>🟨 ERROR:</b> ${ctx.from.first_name} подписался вне скрипта.`);
 		}
 	} catch (e) {
 		logs('🟥 <b>ERROR:</b> Не удалось обработать подписку', e);
