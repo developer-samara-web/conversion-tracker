@@ -9,6 +9,9 @@ const create = async (req, res) => {
 		// Получаем id пользователя
 		const { clientId } = req.query;
 
+		// Проверка данных
+        if (!clientId) { throw new Error('clientId не заполнен') };
+
 		// Проверяем, существует ли пользователь
 		const findUser = await getUser(clientId);
 
@@ -30,11 +33,11 @@ const create = async (req, res) => {
 				// Отменяем бронь через 2 минуты
 				setTimeout(async () => {
 					const user = await getUser(clientId);
-					if(user.status === 'completed') return;
+					if (user.status === 'completed') return;
 					// Очищаем инвайт
 					await updateInvite(_id, null);
 					await updateUser(user._id, { invite: null, status: 'expired' });
-					logs(`🟨 <b>INFO:</b> ${user._id} не подписался вовремя.`);
+					logs(`🟨 <b>INFO:[createRoute]</b> ${user._id} не подписался вовремя.`);
 				}, process.env.TELEGRAM_INVITE_TIME);
 
 				// Отдаём инвайт в ответе
@@ -45,16 +48,17 @@ const create = async (req, res) => {
 			const { _id, href } = await getInvite({ user_id: null });
 			// Создаём нового пользователя
 			const user = await setUser(clientId, _id);
+			if (!user) { logs(`🟨 <b>INFO:[createRoute]</b> Не указан id пользователя`); }
 			// Резервируем инвайт за пользователем
 			await updateInvite(_id, user._id);
 			// Отменяем бронь через 2 минуты
 			setTimeout(async () => {
 				const user = await getUser(clientId);
-				if(user.status === 'completed') return;
+				if (user.status === 'completed') return;
 				// Очищаем инвайт
 				await updateInvite(_id, null);
 				await updateUser(user._id, { invite: null, status: 'expired' });
-				logs(`🟨 <b>INFO:</b> ${user._id} не подписался вовремя.`);
+				logs(`🟨 <b>INFO:[createRoute]</b> ${user._id} не подписался вовремя.`);
 			}, process.env.TELEGRAM_INVITE_TIME);
 
 			// Отдаём инвайт в ответе
@@ -62,7 +66,7 @@ const create = async (req, res) => {
 		}
 	} catch (e) {
 		res.status(400).send(`Не удалось отправить приглашение.`);
-		logs('🟥 <b>ERROR:</b> Не удалось отправить приглашение', e);
+		logs('🟥 <b>ERROR:[createRoute]</b> Не удалось отправить приглашение', e);
 	}
 };
 

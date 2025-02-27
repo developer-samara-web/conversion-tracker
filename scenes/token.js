@@ -7,7 +7,7 @@ const getCode = new Composer()
 getCode.on('text', async (ctx) => {
     try {
         ctx.wizard.state.data = {}
-        await ctx.replyWithHTML(`<b>♻️ Для обновления токена укажите код.</b>\n\n1️⃣ <b>Перейдите по ссылке:</b> https://oauth.yandex.ru/authorize?response_type=code&client_id=${process.env.METRICA_CLIENT_ID}&redirect_uri=https://ya.ru`)
+        await ctx.replyWithHTML(`<b>♻️ Для обновления токена укажите код.</b>\n\n1️⃣ <b>Перейдите по ссылке:</b> https://oauth.yandex.ru/authorize?response_type=code&client_id=${process.env.METRIKA_CLIENT_ID}&redirect_uri=https://ya.ru`)
         return ctx.wizard.next()
     } catch (error) {
         return ctx.scene.leave()

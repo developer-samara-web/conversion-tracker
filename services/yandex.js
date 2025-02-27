@@ -8,8 +8,8 @@ const getOAuthToken = async () => {
             body: new URLSearchParams({
                 grant_type: 'authorization_code',
                 code: 'x2iftegsxrhp7x5f',
-                client_id: process.env.METRICA_CLIENT_ID,
-                client_secret: process.env.METRICA_CLIENT_SECRET,
+                client_id: process.env.METRIKA_CLIENT_ID,
+                client_secret: process.env.METRIKA_CLIENT_SECRET,
             }),
         });
 

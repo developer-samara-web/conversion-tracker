@@ -14,19 +14,19 @@ const joinRequest = async (ctx) => {
 
 		if (user) {
 			// Обновляем статус юзера
-			const updatedUser = await updateUser(user._id, { status: 'completed', invite: null });
+			await updateUser(user._id, { status: 'completed', invite: null });
 			// Чистим инвайт от юзера
-			const clearedInvite = await updateInvite(user.invite._id, null);
+			await updateInvite(user.invite._id, null);
 			// Отправляем данные в метрику
 			const metrikaLead = await conversionRequest(user.client_id);
 			// Отправляем лог
-			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'} ${ctx.from.first_name} (${user._id})</b> отправил заявку`);
+			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] ${ctx.from.first_name} (${user._id})</b> отправил заявку`);
 		} else {
 			// Отправляем лог
-			logs(`<b>🟨 ERROR:</b> ${ctx.from.first_name} подписался вне скрипта.`);
+			logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
 		}
 	} catch (e) {
-		logs('🟥 <b>ERROR:</b> Не удалось обработать подписку', e);
+		logs('🟥 <b>ERROR:[joinRequest]</b> Не удалось обработать подписку', e);
 	}
 }
 

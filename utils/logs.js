@@ -13,7 +13,7 @@ const logs = async (info, e) => {
 	}
 
 	try {
-		await telegram.telegram.sendMessage(54355560, `[${getCurrentTime()}] ${info}${e ? `: ${e}` : '.'}`, { parse_mode: 'HTML' });
+		await telegram.telegram.sendMessage(process.env.TELEGRAM_LOG_GROUP_ID, `[${getCurrentTime()}] ${info}${e ? `: ${e}` : '.'}`, { parse_mode: 'HTML' });
 	} catch (e) {
 		console.log(e);
 	}
