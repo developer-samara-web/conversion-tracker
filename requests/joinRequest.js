@@ -23,7 +23,7 @@ const joinRequest = async (ctx) => {
 			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] ${ctx.from.first_name} (${user._id})</b> отправил заявку`);
 		} else {
 			// Отправляем лог
-			logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
+			// logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
 		}
 	} catch (e) {
 		logs('🟥 <b>ERROR:[joinRequest]</b> Не удалось обработать подписку', e);
