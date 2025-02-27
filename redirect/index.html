@@ -53,11 +53,13 @@
 
                 // Редирект на полученную ссылку
                 if (link) {
-                    setTimeout(() => {
-                        window.location.href = link;
-                    }, 3000);
+                    ym(99889506, 'getClientID', function (clientID) {
+                        if (clientID) {
+                            window.location.href = link;
+                        }
+                    });
                 } else {
-                    console.error("Ссылка не найдена в ответе сервера");
+                    console.error("Ссылка не найдена.");
                 }
             } catch (e) {
                 console.error('Ошибка инициализации скрипта.', e);
