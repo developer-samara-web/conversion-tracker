@@ -8,6 +8,25 @@
 </head>
 
 <body>
+    <div id="root">
+        <img style="width: 200px" src="./preloader.webp" alt="">
+    </div>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #root {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #001d31;
+        }
+    </style>
+
     <script>
         // Инициализация скрипта
         const initButton = async () => {
@@ -34,17 +53,19 @@
 
                 // Редирект на полученную ссылку
                 if (link) {
-                    window.location.href = link; // Выполняем редирект
+                    setTimeout(() => {
+                        window.location.href = link;
+                    }, 3000);
                 } else {
                     console.error("Ссылка не найдена в ответе сервера");
                 }
             } catch (e) {
-                console.error('Ошибка инициализации скрипта.', e)
+                console.error('Ошибка инициализации скрипта.', e);
             }
         }
 
         // Запуск
-        initButton()
+        initButton();
     </script>
 </body>
 
