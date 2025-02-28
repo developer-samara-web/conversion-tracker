@@ -44,7 +44,9 @@
         });
     </script>
     <noscript>
-        <div><img src="https://mc.yandex.ru/watch/99889506" style="position:absolute; left:-9999px;" alt="" /></div>
+        <div>
+            <img src="https://mc.yandex.ru/watch/99889506" style="position:absolute; left:-9999px;" alt="" />
+        </div>
     </noscript>
     <!-- /Yandex.Мetrika counter -->
 
@@ -67,7 +69,7 @@
         }
 
         // Основная функция
-        const initButton = async () => {
+        const initMetrikaAndRedirect = async () => {
             try {
                 const clientID = getQuery('yclid');
 
@@ -97,7 +99,7 @@
         }
 
         // Запуск
-        initButton();
+        initMetrikaAndRedirect();
     </script>
 </body>
 
