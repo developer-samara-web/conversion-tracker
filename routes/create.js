@@ -10,7 +10,7 @@ const create = async (req, res) => {
 		const { clientId } = req.query;
 
 		// Проверка данных
-        if (!clientId) { throw new Error('clientId не заполнен') };
+        if (!clientId) { throw new Error('clientId не заполнен. Отправлен общий инвайт') };
 
 		// Проверяем, существует ли пользователь
 		const findUser = await getUser(clientId);
