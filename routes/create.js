@@ -37,7 +37,7 @@ const create = async (req, res) => {
 					// Очищаем инвайт
 					await updateInvite(_id, null);
 					await updateUser(user._id, { invite: null, status: 'expired' });
-					logs(`🟨 <b>INFO:[createRoute]</b> ${user._id} не подписался вовремя.`);
+					logs(`🟨 <b>INFO:[createRoute]</b> ${user.client_id} не подписался вовремя.`);
 				}, process.env.TELEGRAM_INVITE_TIME);
 
 				// Отдаём инвайт в ответе
@@ -58,7 +58,7 @@ const create = async (req, res) => {
 				// Очищаем инвайт
 				await updateInvite(_id, null);
 				await updateUser(user._id, { invite: null, status: 'expired' });
-				logs(`🟨 <b>INFO:[createRoute]</b> ${user._id} не подписался вовремя.`);
+				logs(`🟨 <b>INFO:[createRoute]</b> ${user.client_id} не подписался вовремя.`);
 			}, process.env.TELEGRAM_INVITE_TIME);
 
 			// Отдаём инвайт в ответе
