@@ -8,9 +8,9 @@ const getUsersCounter = async () => {
         // Получаем пользователей
         const users = await getUsers({});
         // Проверка данных
-        if (!users.length) { return 0 };
+        if (!users) { return 0 };
         // Отправляем данные
-        return users.length;
+        return users;
     } catch (e) {
         logs('🟥 <b>ERROR:[getUsersCounter]</b> Не удалось получить число пользователей', e);
     }
@@ -22,9 +22,9 @@ const getUsersCompletedCounter = async () => {
         // Получаем пользователей
         const users = await getUsers({status: 'completed'});
         // Проверка данных
-        if (!users.length) { return 0 };
+        if (!users) { return 0 };
         // Отправляем данные
-        return users.length;
+        return users;
     } catch (e) {
         logs('🟥 <b>ERROR:[getUsersCompletedCounter]</b> Не удалось получить число пользователей', e);
     }
@@ -36,9 +36,9 @@ const getUsersWorkingCounter = async () => {
         // Получаем пользователей
         const users = await getUsers({status: 'pending'});
         // Проверка данных
-        if (!users.length) { return 0 };
+        if (!users) { return 0 };
         // Отправляем данные
-        return users.length;
+        return users;
     } catch (e) {
         logs('🟥 <b>ERROR:[getUsersWorkingCounter]</b> Не удалось получить число пользователей', e);
     }
@@ -50,9 +50,9 @@ const getUsersExpiredCounter = async () => {
         // Получаем пользователей
         const users = await getUsers({status: 'expired'});
         // Проверка данных
-        if (!users.length) { return 0 };
+        if (!users) { return 0 };
         // Отправляем данные
-        return users.length;
+        return users;
     } catch (e) {
         logs('🟥 <b>ERROR:[getUsersExpiredCounter]</b> Не удалось получить число пользователей', e);
     }
