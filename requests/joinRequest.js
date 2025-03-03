@@ -20,7 +20,7 @@ const joinRequest = async (ctx) => {
 			// Отправляем данные в метрику
 			const metrikaLead = await conversionRequest(user.client_id);
 			// Отправляем лог
-			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${user.client_id}]</b> отправил заявку`);
+			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] ${user.client_id}</b> отправил заявку`);
 		} else {
 			// Отправляем лог
 			// logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
