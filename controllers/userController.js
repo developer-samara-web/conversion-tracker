@@ -22,6 +22,22 @@ const getUser = async (clientId) => {
     }
 }
 
+// Получаем всех пользователей
+const getUsers = async ({data}) => {
+    try {
+        // Подключаемся к базе
+        await connectToDatabase();
+        // Получаем пользователей
+        const users = await User.find(data).populate({ path: 'invite', model: 'Invite' });
+        // Проверка данных
+        if (!users) { return 0 };
+        // Отправляем данные
+        return users.length;
+    } catch (e) {
+        logs('🟥 <b>ERROR:[getUsers]</b> Не удалось получить пользователей', e);
+    }
+}
+
 // Создаём нового пользователя
 const setUser = async (clientId, inviteId) => {
     try {
@@ -86,5 +102,6 @@ module.exports = {
     getUser,
     findUser,
     setUser,
-    updateUser
+    updateUser,
+    getUsers
 }
