@@ -23,8 +23,10 @@ const getUser = async (clientId) => {
 }
 
 // Получаем всех пользователей
-const getUsers = async ({data}) => {
+const getUsers = async (data) => {
     try {
+        // Проверка данных
+        if (!data) { throw new Error('data не заполнен') };
         // Подключаемся к базе
         await connectToDatabase();
         // Получаем пользователей
