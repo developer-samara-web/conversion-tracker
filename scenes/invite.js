@@ -47,7 +47,7 @@ stageResultInviteCounter.on('message', async (ctx) => {
                     logs(`🟥 <b>ERROR:[createInvitesWithDelay]</b> Ошибка при создании инвайта №${i}`, error);
                 } finally {
                     // Ждём 5 секунд перед следующим созданием
-                    if (i < counter) { await new Promise((resolve) => setTimeout(resolve, 15000)) }
+                    if (i < counter) { await new Promise((resolve) => setTimeout(resolve, 5000)) }
                 }
             }
             // Возвращаем количество успешно созданных инвайтов
