@@ -52,11 +52,11 @@ const setInvites = async (ctx, counter) => {
 
     try {
         // Проверка данных
-        if (counter <= 0) { throw new Error('Количество должно быть больше нуля') }
+        if (Number(counter) <= 0) { throw new Error('Количество должно быть больше нуля') }
         // Подключаемся к базе данных
         await connectToDatabase();
         // Цикл для создания инвайтов
-        for (let i = 0; i < counter; i++) {
+        for (let i = 0; i < Number(counter); i++) {
             try {
                 // Создаём инвайт
                 const invite_link = await inviteRequest(ctx);
