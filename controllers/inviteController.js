@@ -40,8 +40,6 @@ const setInvite = async (ctx) => {
         return invite_link;
     } catch (e) {
         logs('🟥 <b>ERROR:[setInvite]</b> Не удалось создать приглашение', e);
-    } finally {
-        ctx.scene.enter('start');
     }
 }
 
