@@ -47,7 +47,7 @@ stageResultInviteCounter.on('message', async (ctx) => {
                     logs(`🟥 <b>ERROR:[createInvitesWithDelay]</b> Ошибка при создании инвайта №${i}`, error);
                 } finally {
                     // Ждём 5 секунд перед следующим созданием
-                    if (i < counter) { await new Promise((resolve) => setTimeout(resolve, 5000)) }
+                    if (i < counter) { await new Promise((resolve) => setTimeout(resolve, 10000)) }
                 }
             }
             // Возвращаем количество успешно созданных инвайтов
@@ -57,7 +57,7 @@ stageResultInviteCounter.on('message', async (ctx) => {
         // Запускаем процесс создания инвайтов
         const totalSuccess = await createInvitesWithDelay(ctx, counter, message.message_id);
         // Отправляем финальное сообщение
-        await ctx.telegram.editMessageText(ctx.chat.id, message.message_id, null, `🟩 <b>Успешное создание инвайтов:</b> Создано ${totalSuccess} из ${counter}`, { parse_mode: 'HTML' });
+        await ctx.telegram.editMessageText(ctx.chat.id, message.message_id, null, `🟩 <b>Успех:</b> Создано ${totalSuccess} из ${counter}`, { parse_mode: 'HTML' });
     } catch (error) {
         await ctx.replyWithHTML(`🟥 <b>Ошибка:</b> ${error.message}`);
     } finally {
