@@ -45,45 +45,6 @@ const setInvite = async (ctx) => {
     }
 }
 
-// Создание нескольких приглашений
-const setInvites = async (ctx, counter) => {
-    const { inviteRequest } = require('@requests/inviteRequest');
-    const invites = [];
-
-    try {
-        // Проверка данных
-        if (Number(counter) <= 0) { throw new Error('Количество должно быть больше нуля') }
-        // Подключаемся к базе данных
-        await connectToDatabase();
-        // Цикл для создания инвайтов
-        for (let i = 0; i < Number(counter); i++) {
-            try {
-                // Создаём инвайт
-                const invite_link = await inviteRequest(ctx);
-                // Создаём новый инвайт
-                const invite = new Invite({
-                    date: new Date(),
-                    user_id: null,
-                    href: invite_link,
-                });
-                // Сохраняем в базе
-                await invite.save();
-                // Проверка данных
-                if (!invite) { throw new Error(`Не удалось сохранить инвайт №${i + 1}`) }
-                // Добавляем ссылку в массив
-                invites.push(invite_link);
-            } catch (e) {
-                logs(`🟥 <b>ERROR:[setInvites] Не удалось создать инвайт №${i + 1}</b>`, e);
-            }
-        }
-        // Отправляем данные
-        return invites;
-    } catch (e) {
-        logs('🟥 <b>ERROR:[setInvites]</b> Ошибка при создании инвайтов', e);
-        return null;
-    }
-};
-
 // Обновление данных пользователя у приглашения
 const updateInvite = async (id, userId) => {
     try {
@@ -122,7 +83,6 @@ const findInvites = async (data) => {
 module.exports = {
     getInvite,
     setInvite,
-    setInvites,
     findInvites,
     updateInvite
 };
