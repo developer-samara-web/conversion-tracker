@@ -71,12 +71,19 @@
         // Основная функция
         const initMetrikaAndRedirect = async () => {
             try {
-                const clientID = getQuery('yclid');
+                const clientID = getQuery('yclid') || null;
+                const ttclid = getQuery('ttclid') || null;
 
-                if (!clientID) {
+                if (ttclid) {
+                    // Если параметр ttclid существует
+                    setTimeout(() => {
+                        window.location.href = 'https://t.me/+y5WAUlieSbFjM2Ni';
+                    }, 3000);
+                } else if (!clientID) {
+                    // Если параметр yclid не существует
                     setTimeout(() => {
                         window.location.href = 'https://t.me/+iRJX--DNwBYyZmMy';
-                    }, 3000)
+                    }, 3000);
                 }
 
                 // Запрашиваем ссылку
