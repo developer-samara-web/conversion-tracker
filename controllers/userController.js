@@ -41,7 +41,7 @@ const getUsers = async (data) => {
 }
 
 // Создаём нового пользователя
-const setUser = async (clientId, inviteId, clientType) => {
+const setUser = async (clientId, inviteId, clientType = 'yandex') => {
     try {
         // Проверка данных
         if (!clientId) { throw new Error('clientId не заполнен') };
