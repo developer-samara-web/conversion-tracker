@@ -3,6 +3,7 @@ const { logs } = require('@utils/logs');
 const { findUser, updateUser } = require('@controllers/userController');
 const { updateInvite } = require('@controllers/inviteController');
 const { metrikaRequest } = require('@requests/metrikaRequest');
+const { tiktokRequest } = require('@requests/tiktokRequest');
 
 // Запрос на вход в чат
 const joinRequest = async (ctx) => {
