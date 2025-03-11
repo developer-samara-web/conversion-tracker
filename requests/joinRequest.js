@@ -11,39 +11,34 @@ const joinRequest = async (ctx) => {
 		// Получаем ссылку инвайта
 		const { invite_link } = ctx.chatJoinRequest?.invite_link;
 		// Поиск юзера с нужным инватом
-		const { _id, invite, client_id, client_type } = await findUser(invite_link);
-
-		if (client_type && client_type === 'yandex') {
-			// Обновляем статус юзера
-			await updateUser(_id, { status: 'completed', invite: null });
-			// Чистим инвайт от юзера
-			await updateInvite(invite._id, null);
-			// Отправляем данные в метрику
-			const metrikaLead = await metrikaRequest(client_id);
-			// Отправляем лог
-			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest][${client_id}]</b> отправил заявку в метрику`);
-
-			return;
+		const user = await findUser(invite_link);
+		// Проверяем тип конверсии
+		if (user) {
+			switch (user.client_type) {
+				case 'yandex':
+					// Обновляем статус юзера
+					await updateUser(user._id, { status: 'completed', invite: null });
+					// Чистим инвайт от юзера
+					await updateInvite(user.invite._id, null);
+					// Отправляем данные в метрику
+					const metrikaLead = await metrikaRequest(user.client_id);
+					// Отправляем лог
+					logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest][${user.client_id}]</b> отправил заявку в метрику`);
+					break
+				case 'tiktok':
+					// Обновляем статус юзера
+					await updateUser(user._id, { status: 'completed', invite: null });
+					// Чистим инвайт от юзера
+					await updateInvite(user.invite._id, null);
+					// Отправляем данные в метрику
+					const tiktokLead = await tiktokRequest(user.client_id);
+					// Отправляем лог
+					logs(`<b>${tiktokLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest][${user.client_id}]</b> отправил заявку в тикток`);
+					break
+			}
 		} else {
 			logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
 		}
-
-		if (client_type && client_type === 'tiktok') {
-			// Обновляем статус юзера
-			await updateUser(_id, { status: 'completed', invite: null });
-			// Чистим инвайт от юзера
-			await updateInvite(invite._id, null);
-			// Отправляем данные в метрику
-			const tiktokLead = await tiktokRequest(client_id);
-			// Отправляем лог
-			logs(`<b>${tiktokLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${client_type}] [${client_id}]</b> отправил заявку в тикток`);
-
-			return;
-		} else {
-			logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
-		}
-
-		return
 	} catch (e) {
 		logs('🟥 <b>ERROR:[joinRequest]</b> Не удалось обработать подписку', e);
 		return
