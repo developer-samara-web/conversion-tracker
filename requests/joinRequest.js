@@ -21,7 +21,7 @@ const joinRequest = async (ctx) => {
 			// Отправляем данные в метрику
 			const metrikaLead = await metrikaRequest(client_id);
 			// Отправляем лог
-			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${client_id}]</b> отправил заявку`);
+			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest][${client_id}]</b> отправил заявку в метрику`);
 
 			return;
 		}
@@ -34,7 +34,7 @@ const joinRequest = async (ctx) => {
 			// Отправляем данные в метрику
 			const tiktokLead = await tiktokRequest(client_id);
 			// Отправляем лог
-			logs(`<b>${tiktokLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${client_id}]</b> отправил заявку`);
+			logs(`<b>${tiktokLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${client_type}] [${client_id}]</b> отправил заявку в тикток`);
 
 			return;
 		}
