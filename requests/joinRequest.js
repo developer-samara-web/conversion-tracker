@@ -13,7 +13,7 @@ const joinRequest = async (ctx) => {
 		// Поиск юзера с нужным инватом
 		const { _id, invite, client_id, client_type } = await findUser(invite_link);
 
-		if (client_type === 'yandex') {
+		if (client_type && client_type === 'yandex') {
 			// Обновляем статус юзера
 			await updateUser(_id, { status: 'completed', invite: null });
 			// Чистим инвайт от юзера
@@ -24,9 +24,11 @@ const joinRequest = async (ctx) => {
 			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest][${client_id}]</b> отправил заявку в метрику`);
 
 			return;
+		} else {
+			logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
 		}
 
-		if (client_type === 'tiktok') {
+		if (client_type && client_type === 'tiktok') {
 			// Обновляем статус юзера
 			await updateUser(_id, { status: 'completed', invite: null });
 			// Чистим инвайт от юзера
@@ -37,9 +39,10 @@ const joinRequest = async (ctx) => {
 			logs(`<b>${tiktokLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${client_type}] [${client_id}]</b> отправил заявку в тикток`);
 
 			return;
+		} else {
+			logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
 		}
 
-		logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
 		return
 	} catch (e) {
 		logs('🟥 <b>ERROR:[joinRequest]</b> Не удалось обработать подписку', e);
