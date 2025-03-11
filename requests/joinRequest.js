@@ -2,31 +2,47 @@
 const { logs } = require('@utils/logs');
 const { findUser, updateUser } = require('@controllers/userController');
 const { updateInvite } = require('@controllers/inviteController');
-const { conversionRequest } = require('@requests/conversionRequest');
+const { metrikaRequest } = require('@requests/metrikaRequest');
 
 // Запрос на вход в чат
 const joinRequest = async (ctx) => {
 	try {
 		// Получаем ссылку инвайта
-		const { invite_link } = ctx.chatJoinRequest.invite_link;
+		const { invite_link } = ctx.chatJoinRequest?.invite_link;
 		// Поиск юзера с нужным инватом
-		const user = await findUser(invite_link);
+		const { _id, invite, client_id, client_type } = await findUser(invite_link);
 
-		if (user) {
+		if (client_type === 'yandex') {
 			// Обновляем статус юзера
-			await updateUser(user._id, { status: 'completed', invite: null });
+			await updateUser(_id, { status: 'completed', invite: null });
 			// Чистим инвайт от юзера
-			await updateInvite(user.invite._id, null);
+			await updateInvite(invite._id, null);
 			// Отправляем данные в метрику
-			const metrikaLead = await conversionRequest(user.client_id);
+			const metrikaLead = await metrikaRequest(client_id);
 			// Отправляем лог
-			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${user.client_id}]</b> отправил заявку`);
-		} else {
-			// Отправляем лог
-			// logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
+			logs(`<b>${metrikaLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${client_id}]</b> отправил заявку`);
+
+			return;
 		}
+
+		if (client_type === 'tiktok') {
+			// Обновляем статус юзера
+			await updateUser(_id, { status: 'completed', invite: null });
+			// Чистим инвайт от юзера
+			await updateInvite(invite._id, null);
+			// Отправляем данные в метрику
+			const tiktokLead = await tiktokRequest(client_id);
+			// Отправляем лог
+			logs(`<b>${tiktokLead ? '🟩 OK:' : '🟥 ERROR:'}[joinRequest] [${client_id}]</b> отправил заявку`);
+
+			return;
+		}
+
+		logs(`<b>🟨 INFO:[joinRequest]</b> ${ctx.from.first_name} подписался без скрипта`);
+		return
 	} catch (e) {
 		logs('🟥 <b>ERROR:[joinRequest]</b> Не удалось обработать подписку', e);
+		return
 	}
 }
 

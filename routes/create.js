@@ -7,10 +7,10 @@ const { getInvite, updateInvite } = require('@controllers/inviteController');
 const create = async (req, res) => {
 	try {
 		// Получаем id пользователя
-		const { clientId } = req.query;
+		const { clientId, type } = req.query;
 
 		// Проверка данных
-        if (!clientId) { throw new Error('clientId не заполнен. Отправлен общий инвайт') };
+        if (!clientId || type) { throw new Error('clientId или type не заполнен. Отправлен общий инвайт') };
 
 		// Проверяем, существует ли пользователь
 		const findUser = await getUser(clientId);
@@ -47,7 +47,7 @@ const create = async (req, res) => {
 			// Если пользователя нет, запрашиваем инвайт
 			const { _id, href } = await getInvite({ user_id: null });
 			// Создаём нового пользователя
-			const user = await setUser(clientId, _id);
+			const user = await setUser(clientId, _id, type);
 			if (!user) { logs(`🟨 <b>INFO:[createRoute]</b> Не указан id пользователя`); }
 			// Резервируем инвайт за пользователем
 			await updateInvite(_id, user._id);

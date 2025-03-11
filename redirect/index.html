@@ -71,24 +71,13 @@
         // Основная функция
         const initMetrikaAndRedirect = async () => {
             try {
-                const clientID = getQuery('yclid') || null;
+                const yclid = getQuery('yclid') || null;
                 const ttclid = getQuery('ttclid') || null;
 
-                if (ttclid) {
-                    console.log("Параметр ttclid существует");
-                    // Если параметр ttclid существует
-                    setTimeout(() => {
-                        window.location.href = 'https://t.me/+y5WAUlieSbFjM2Ni';
-                    }, 2000);
-                } else if (!clientID) {
-                    console.log("Параметр yclid не существует");
-                    // Если параметр yclid не существует
-                    setTimeout(() => {
-                        window.location.href = 'https://t.me/+iRJX--DNwBYyZmMy';
-                    }, 2000);
-                } else {
+                // Если метрика
+                if (yclid) {
                     // Запрашиваем ссылку
-                    const response = await fetch(`https://4rthteamtg.online/api/create?clientId=${clientID}`);
+                    const response = await fetch(`https://4rthteamtg.online/api/create?clientId=${yclid}&type=yandex`);
                     // Если ответ не успешный, выбрасываем ошибку
                     if (!response.ok) { throw new Error(`Ошибка при получении ссылки: ${response.status} ${response.statusText}`) }
                     // Иначе парсим JSON ответа
@@ -106,6 +95,33 @@
                         console.error("Ссылка не найдена.");
                     }
                 }
+
+                // Если тикток
+                if (ttclid) {
+                    // Запрашиваем ссылку
+                    const response = await fetch(`https://4rthteamtg.online/api/create?clientId=${ttclid}&type=tiktok`);
+                    // Если ответ не успешный, выбрасываем ошибку
+                    if (!response.ok) { throw new Error(`Ошибка при получении ссылки: ${response.status} ${response.statusText}`) }
+                    // Иначе парсим JSON ответа
+                    const { data: link } = await response.json();
+                    // Если ссылка существует
+                    if (link) {
+                        console.log("Ссылка получена:", link);
+
+                        // Ждём, пока Метрика полностью загрузится
+                        ym(99889506, "getClientID", function (clientID) {
+                            console.log("Метрика инициализирована, ClientID:", clientID);
+                            redirectAfterMetrika(link);
+                        });
+                    } else {
+                        console.error("Ссылка не найдена.");
+                    }
+                }
+
+                // Если параметры не получены
+                setTimeout(() => {
+                    window.location.href = 'https://t.me/+iRJX--DNwBYyZmMy';
+                }, 2000);
             } catch (e) {
                 console.error('Ошибка инициализации скрипта.', e);
             }

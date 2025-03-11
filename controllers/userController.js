@@ -41,14 +41,19 @@ const getUsers = async (data) => {
 }
 
 // Создаём нового пользователя
-const setUser = async (clientId, inviteId) => {
+const setUser = async (clientId, inviteId, clientType) => {
     try {
         // Проверка данных
         if (!clientId) { throw new Error('clientId не заполнен') };
         // Подключаемся к базе
         await connectToDatabase();
         // Создаём нового пользователя
-        const user = new User({ date: new Date(), client_id: clientId, invite: inviteId });
+        const user = new User({ 
+            date: new Date(), 
+            client_id: clientId,
+            client_type: clientType,
+            invite: inviteId
+        });
         // Сохраняем в базе
         await user.save();
         // Проверка данных

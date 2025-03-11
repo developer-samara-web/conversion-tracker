@@ -4,7 +4,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 
 // Отправка лидов в Метрику
-const conversionRequest = async (clientId) => {
+const metrikaRequest = async (clientId) => {
     try {
         // Проверка на наличие переменных окружения
         if (!process.env.METRIKA_COUNTER_ID || !process.env.METRIKA_GOAL_ID || !process.env.METRIKA_OAUTH_TOKEN) {
@@ -59,4 +59,4 @@ const conversionRequest = async (clientId) => {
 };
 
 
-module.exports = { conversionRequest }
+module.exports = { metrikaRequest }
